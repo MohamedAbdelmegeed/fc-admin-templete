@@ -1,0 +1,313 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+/* Tailwind v4: المصادر بتتحدد صراحةً — Filament مبقاش بيمسح views بتاعتنا. */
+@source '../../../../app/**/*.php';
+@source '../../../../src/**/*.php';
+@source '../../../../resources/views/**/*.blade.php';
+@source '../../../../vendor/filament/**/*.blade.php';
+
+@theme {
+  /* ═══ الخطوط ═══ */
+  --font-sans: 'IBM Plex Sans Arabic', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', ui-monospace, monospace;
+
+  /* ═══ سُلَّم المقاسات ═══ */
+  --text-display: 2rem;      --text-display--line-height: 2.75rem;
+  --text-h1: 1.5rem;         --text-h1--line-height: 2.1875rem;
+  --text-h2: 1.25rem;        --text-h2--line-height: 1.875rem;
+  --text-h3: 1.0625rem;      --text-h3--line-height: 1.625rem;
+  --text-body: 0.9375rem;    --text-body--line-height: 1.6875rem;
+  --text-small: 0.84375rem;  --text-small--line-height: 1.4375rem;
+  --text-label: 0.75rem;     --text-label--line-height: 1.125rem;
+
+  /* ═══ الانحناءات والظلال ═══ */
+  --radius-fc-sm: 0.375rem;
+  --radius-fc:    0.625rem;
+  --radius-fc-lg: 0.875rem;
+  --shadow-fc-card: 0 1px 2px 0 rgb(22 41 43 / 0.04),
+                    0 4px 12px -2px rgb(22 41 43 / 0.06);
+}
+
+/* ═══════════ طبقة المنتج — الوضع الفاتح ═══════════
+   الألوان دي ثابتة ومتتغيّرش لأي مستأجر. لون العلامة بس هو اللي
+   بيتغيّر، وبيتحقن كمتغيّرات --fc-brand-* من render hook. */
+:root {
+  --fc-bg:            #F2F5F4;
+  --fc-surface:       #FFFFFF;
+  --fc-sunken:        #E9EFEE;
+  --fc-border:        #D8E1E0;
+  --fc-border-subtle: #E8EEED;
+  --fc-text:          #16292B;
+  --fc-text-2:        #4E6260;
+  --fc-text-muted:    #667877;
+
+  --fc-success: #0F7A3D;
+  --fc-warning: #96550A;
+  --fc-danger:  #B4232E;
+  --fc-info:    #0E6E8C;
+
+  --fc-cat-teal:   #00908A;
+  --fc-cat-brick:  #A32E3C;
+  --fc-cat-indigo: #2E5AAC;
+  --fc-cat-amber:  #A55A00;
+  --fc-cat-plum:   #9B2C6F;
+  --fc-cat-olive:  #5D7A00;
+}
+
+/* ═══════════ الوضع الداكن ═══════════ */
+.dark {
+  --fc-bg:            #0C1415;
+  --fc-surface:       #141F20;
+  --fc-sunken:        #0F1A1B;
+  --fc-border:        #263536;
+  --fc-border-subtle: #1D2A2B;
+  --fc-text:          #E7EEED;
+  --fc-text-2:        #A6B8B7;
+  --fc-text-muted:    #7E9291;
+
+  --fc-success: #4ADE80;
+  --fc-warning: #FBBF24;
+  --fc-danger:  #F87171;
+  --fc-info:    #38BDF8;
+
+  --fc-cat-teal:   #189B95;
+  --fc-cat-brick:  #D1555F;
+  --fc-cat-indigo: #5B85D6;
+  --fc-cat-amber:  #BE7A2E;
+  --fc-cat-plum:   #C55C9C;
+  --fc-cat-olive:  #7B9C33;
+}
+
+/* ═══════════ قواعد عربية إلزامية (docs/06 بند ٤) ═══════════ */
+
+/* letter-spacing على العربي بيقطع اتصال الحروف — بنلغيه من الجذر
+   عشان أي فئة Tailwind بتضيفه ما تأثرش. */
+[dir='rtl'] {
+  letter-spacing: normal !important;
+}
+
+[dir='rtl'] body {
+  line-height: 1.75;
+}
+
+/* أكواد وأرقام لاتينية جوه نص عربي: من غير العزل ده USR-1024
+   بيظهر 1024-USR جوه جملة عربية. */
+.fc-code,
+.fc-number {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  unicode-bidi: isolate;
+  direction: ltr;
+  display: inline-block;
+}
+
+/* ═══════════ لمسات الشكل ═══════════ */
+.fi-sidebar {
+  background: var(--fc-surface);
+  border-inline-end: 1px solid var(--fc-border-subtle);
+}
+
+.fi-main {
+  background: var(--fc-bg);
+}
+
+.fi-section,
+.fi-ta-ctn {
+  border-radius: var(--radius-fc-lg);
+  box-shadow: var(--shadow-fc-card);
+}
+
+.fi-btn {
+  border-radius: var(--radius-fc);
+  font-weight: 500;
+}
+
+.fi-input {
+  border-radius: var(--radius-fc-sm);
+}
+
+/* رأس الجدول بيفضل ثابت عند التمرير — فرق كبير في جدول طويل. */
+.fi-ta-header-cell {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+  background: var(--fc-surface);
+}
+
+/* شارة التصنيف: خلفية 50 + نص 700 — مش نفس اللون بشفافية ٢٠٪،
+   لأن ده بيبقى غير مقروء مع الألوان الفاتحة. */
+.fc-badge {
+  border-radius: 9999px;
+  padding-inline: 0.625rem;
+  padding-block: 0.1875rem;
+  font-size: var(--text-label);
+  font-weight: 600;
+}
+
+/* ═══════════ الفوتر ═══════════ */
+.fc-footer {
+  border-block-start: 1px solid var(--fc-border-subtle);
+  padding-block: 1rem;
+  padding-inline: 1.5rem;
+  background: var(--fc-surface);
+}
+
+.fc-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--text-small);
+  color: var(--fc-text-muted);
+}
+
+.fc-footer__link {
+  color: var(--fc-brand-600, var(--fc-text-2));
+  font-weight: 500;
+}
+
+.fc-footer__link:hover {
+  text-decoration: underline;
+}
+
+/* ═══════════ مؤشر البيئة في أسفل السايدبار ═══════════ */
+.fc-env {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-inline: 0.75rem;
+  padding-block: 0.5rem;
+  font-size: var(--text-label);
+  color: var(--fc-text-muted);
+  border-block-start: 1px solid var(--fc-border-subtle);
+}
+
+.fc-env__badge {
+  border-radius: 9999px;
+  padding-inline: 0.5rem;
+  padding-block: 0.125rem;
+  font-weight: 600;
+}
+
+.fc-env__badge--local { background: var(--fc-sunken); color: var(--fc-text-2); }
+.fc-env__badge--staging { background: color-mix(in oklab, var(--fc-warning) 18%, transparent); color: var(--fc-warning); }
+.fc-env__badge--production { background: color-mix(in oklab, var(--fc-danger) 18%, transparent); color: var(--fc-danger); }
+
+/* ═══════════ مبدّل اللغة في الشريط العلوي ═══════════
+   مجموعة مجزّأة: اللغتين ظاهرتين والحالية متعلّمة — عشان المستخدم
+   يعرف هو فين، مش بس يعرف يروح فين. كل المسافات منطقية (start/end)
+   فالمجموعة بتنعكس لوحدها في RTL من غير أي قاعدة اتجاهية. */
+.fc-locale {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.125rem;
+  padding: 0.1875rem;
+  border-radius: 9999px;
+  background: var(--fc-sunken);
+  border: 1px solid var(--fc-border-subtle);
+  /* الأرقام والحروف اللاتينية جوه شريط عربي محتاجة عزل عشان
+     ما تتقلبش مع اتجاه الصفحة. */
+  unicode-bidi: isolate;
+}
+
+.fc-locale__option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  padding-inline: 0.5rem;
+  padding-block: 0.1875rem;
+  border-radius: 9999px;
+  font-size: var(--text-label);
+  font-weight: 600;
+  line-height: 1.125rem;
+  color: var(--fc-text-muted);
+  text-decoration: none;
+  transition: background-color 75ms, color 75ms;
+}
+
+.fc-locale__option:hover {
+  color: var(--fc-text);
+  background: color-mix(in oklab, var(--fc-text) 6%, transparent);
+}
+
+.fc-locale__option:focus-visible {
+  outline: 2px solid var(--fc-brand-600, var(--fc-info));
+  outline-offset: 1px;
+}
+
+/* الحالية: سطح مرفوع فوق الخلفية الغائرة — تباين كافي في الوضعين
+   من غير ما نعتمد على لون العلامة (اللي بيتغيّر لكل مؤسسة). */
+.fc-locale__option--active {
+  background: var(--fc-surface);
+  color: var(--fc-text);
+  box-shadow: 0 1px 2px 0 rgb(22 41 43 / 0.08);
+  cursor: default;
+}
+
+.fc-locale__option--active:hover {
+  background: var(--fc-surface);
+}
+
+.dark .fc-locale__option--active {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.35);
+}
+
+/* ═══════════ تبويبات الإعدادات ═══════════
+   الإعدادات مدخل واحد في القائمة وجوّاه تبويبات. الشريط بيتزحلق
+   أفقياً على الموبايل بدل ما يلفّ لسطرين. */
+.fc-settings-tabs {
+  display: flex;
+  gap: 0.25rem;
+  margin-block-end: 1.5rem;
+  padding: 0.25rem;
+  border-radius: var(--radius-fc);
+  background: var(--fc-sunken);
+  border: 1px solid var(--fc-border-subtle);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.fc-settings-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.fc-settings-tabs__item {
+  flex: none;
+  padding-inline: 0.875rem;
+  padding-block: 0.4375rem;
+  border-radius: var(--radius-fc-sm);
+  font-size: var(--text-small);
+  font-weight: 500;
+  color: var(--fc-text-2);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 75ms, color 75ms;
+}
+
+.fc-settings-tabs__item:hover {
+  color: var(--fc-text);
+  background: color-mix(in oklab, var(--fc-text) 5%, transparent);
+}
+
+.fc-settings-tabs__item:focus-visible {
+  outline: 2px solid var(--fc-brand-600, var(--fc-info));
+  outline-offset: -2px;
+}
+
+.fc-settings-tabs__item--active {
+  background: var(--fc-surface);
+  color: var(--fc-text);
+  font-weight: 600;
+  box-shadow: 0 1px 2px 0 rgb(22 41 43 / 0.08);
+}
+
+.fc-settings-tabs__item--active:hover {
+  background: var(--fc-surface);
+}
+
+.dark .fc-settings-tabs__item--active {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.35);
+}

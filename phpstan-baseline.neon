@@ -1,0 +1,259 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Instanceof between Src\\Contexts\\Identity\\Domain\\Models\\User and Illuminate\\Contracts\\Auth\\MustVerifyEmail will always evaluate to false\.$#'
+			identifier: instanceof.alwaysFalse
+			count: 1
+			path: app/Actions/Fortify/UpdateUserProfileInformation.php
+
+		-
+			message: '#^Result of && is always false\.$#'
+			identifier: booleanAnd.alwaysFalse
+			count: 1
+			path: app/Actions/Fortify/UpdateUserProfileInformation.php
+
+		-
+			message: '#^Match expression does not handle remaining value\: string$#'
+			identifier: match.unhandled
+			count: 3
+			path: database/migrations/2026_08_30_121819_create_pulse_tables.php
+
+		-
+			message: '#^Method Src\\Contexts\\Identity\\Domain\\Models\\PasswordHistory\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Contexts/Identity/Domain/Models/PasswordHistory.php
+
+		-
+			message: '#^Access to an undefined property Spatie\\Activitylog\\Contracts\\Activity\:\:\$properties\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Contexts/Identity/Domain/Models/User.php
+
+		-
+			message: '#^Access to an undefined property Src\\Contexts\\Identity\\Domain\\Models\\User\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Contexts/Identity/Domain/Models/User.php
+
+		-
+			message: '#^Class Src\\Contexts\\Identity\\Domain\\Models\\User uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Contexts/Identity/Domain/Models/User.php
+
+		-
+			message: '#^Method Src\\Contexts\\Identity\\Domain\\Models\\User\:\:devices\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Contexts/Identity/Domain/Models/User.php
+
+		-
+			message: '#^Method Src\\Contexts\\Identity\\Domain\\Models\\User\:\:getTenants\(\) should return Illuminate\\Database\\Eloquent\\Collection\<int, Src\\Contexts\\Tenancy\\Domain\\Models\\Tenant\> but returns Illuminate\\Database\\Eloquent\\Collection\<int, Illuminate\\Database\\Eloquent\\Model\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Contexts/Identity/Domain/Models/User.php
+
+		-
+			message: '#^Method Src\\Contexts\\Identity\\Domain\\Models\\User\:\:notificationPreferences\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Contexts/Identity/Domain/Models/User.php
+
+		-
+			message: '#^Method Src\\Contexts\\Identity\\Domain\\Models\\User\:\:passwordHistories\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\HasMany does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Contexts/Identity/Domain/Models/User.php
+
+		-
+			message: '#^Method Src\\Contexts\\Identity\\Domain\\Models\\User\:\:scopeActive\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Contexts/Identity/Domain/Models/User.php
+
+		-
+			message: '#^Method Src\\Contexts\\Identity\\Domain\\Models\\User\:\:scopeActive\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Contexts/Identity/Domain/Models/User.php
+
+		-
+			message: '#^Method Src\\Contexts\\Identity\\Domain\\Models\\User\:\:scopeInTenant\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Contexts/Identity/Domain/Models/User.php
+
+		-
+			message: '#^Method Src\\Contexts\\Identity\\Domain\\Models\\User\:\:scopeInTenant\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Contexts/Identity/Domain/Models/User.php
+
+		-
+			message: '#^Method Src\\Contexts\\Identity\\Domain\\Models\\User\:\:tenants\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany does not specify its types\: TRelatedModel, TDeclaringModel, TPivotModel, TAccessor \(2\-4 required\)$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Contexts/Identity/Domain/Models/User.php
+
+		-
+			message: '#^Access to an undefined property Src\\Contexts\\Identity\\Domain\\Models\\UserDevice\:\:\$session_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Contexts/Identity/Domain/Models/UserDevice.php
+
+		-
+			message: '#^Method Src\\Contexts\\Identity\\Domain\\Models\\UserDevice\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Contexts/Identity/Domain/Models/UserDevice.php
+
+		-
+			message: '#^Access to an undefined property Src\\Contexts\\Identity\\Domain\\Models\\User\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Contexts/Identity/Infrastructure/Policies/UserPolicy.php
+
+		-
+			message: '#^Method Src\\Contexts\\Identity\\Presentation\\Filament\\Resources\\RoleResource\:\:getNavigationGroup\(\) never returns null so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: src/Contexts/Identity/Presentation/Filament/Resources/RoleResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$email\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Contexts/Identity/Presentation/Filament/Resources/UserResource.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$roles\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Contexts/Identity/Presentation/Filament/Resources/UserResource.php
+
+		-
+			message: '#^Method Src\\Contexts\\Identity\\Presentation\\Filament\\Resources\\UserResource\:\:getNavigationBadgeColor\(\) never returns null so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: src/Contexts/Identity/Presentation/Filament/Resources/UserResource.php
+
+		-
+			message: '#^Method Src\\Contexts\\Identity\\Presentation\\Filament\\Resources\\UserResource\:\:getNavigationBadgeTooltip\(\) never returns null so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: src/Contexts/Identity/Presentation/Filament/Resources/UserResource.php
+
+		-
+			message: '#^Method Src\\Contexts\\Identity\\Presentation\\Filament\\Resources\\UserResource\:\:getNavigationGroup\(\) never returns null so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: src/Contexts/Identity/Presentation/Filament/Resources/UserResource.php
+
+		-
+			message: '#^Unable to resolve the template type TKey in call to function collect$#'
+			identifier: argument.templateType
+			count: 1
+			path: src/Contexts/Identity/Presentation/Filament/Resources/UserResource.php
+
+		-
+			message: '#^Unable to resolve the template type TValue in call to function collect$#'
+			identifier: argument.templateType
+			count: 1
+			path: src/Contexts/Identity/Presentation/Filament/Resources/UserResource.php
+
+		-
+			message: '#^Class Src\\Contexts\\Notifications\\Domain\\Models\\NotificationPreference uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Contexts/Notifications/Domain/Models/NotificationPreference.php
+
+		-
+			message: '#^Method Src\\Contexts\\Notifications\\Domain\\Models\\NotificationPreference\:\:user\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsTo does not specify its types\: TRelatedModel, TDeclaringModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Contexts/Notifications/Domain/Models/NotificationPreference.php
+
+		-
+			message: '#^Access to an undefined property Src\\Contexts\\Tenancy\\Domain\\Models\\Tenant\:\:\$trial_ends_at\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Contexts/Tenancy/Domain/Models/Tenant.php
+
+		-
+			message: '#^Class Src\\Contexts\\Tenancy\\Domain\\Models\\Tenant uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Contexts/Tenancy/Domain/Models/Tenant.php
+
+		-
+			message: '#^Method Src\\Contexts\\Tenancy\\Domain\\Models\\Tenant\:\:scopeActive\(\) has parameter \$query with generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Contexts/Tenancy/Domain/Models/Tenant.php
+
+		-
+			message: '#^Method Src\\Contexts\\Tenancy\\Domain\\Models\\Tenant\:\:scopeActive\(\) return type with generic class Illuminate\\Database\\Eloquent\\Builder does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Contexts/Tenancy/Domain/Models/Tenant.php
+
+		-
+			message: '#^Method Src\\Contexts\\Tenancy\\Domain\\Models\\Tenant\:\:users\(\) return type with generic class Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany does not specify its types\: TRelatedModel, TDeclaringModel, TPivotModel, TAccessor \(2\-4 required\)$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Contexts/Tenancy/Domain/Models/Tenant.php
+
+		-
+			message: '#^Access to an undefined property Src\\Contexts\\Tenancy\\Domain\\Models\\Tenant\:\:\$is_active\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Contexts/Tenancy/Infrastructure/Policies/TenantPolicy.php
+
+		-
+			message: '#^Access to an undefined property Src\\Contexts\\Tenancy\\Domain\\Models\\Tenant\:\:\$slug\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Contexts/Tenancy/Presentation/Filament/Resources/TenantResource.php
+
+		-
+			message: '#^Method Src\\Contexts\\Tenancy\\Presentation\\Filament\\Resources\\TenantResource\:\:getNavigationGroup\(\) never returns null so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: src/Contexts/Tenancy/Presentation/Filament/Resources/TenantResource.php
+
+		-
+			message: '#^Unable to resolve the template type TKey in call to function collect$#'
+			identifier: argument.templateType
+			count: 1
+			path: src/Contexts/Tenancy/Presentation/Filament/Resources/TenantResource.php
+
+		-
+			message: '#^Unable to resolve the template type TValue in call to function collect$#'
+			identifier: argument.templateType
+			count: 1
+			path: src/Contexts/Tenancy/Presentation/Filament/Resources/TenantResource.php
+
+		-
+			message: '#^Cannot access property \$primary_color on Illuminate\\Database\\Eloquent\\Model\|int\|string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: src/Contexts/Tenancy/Presentation/Filament/Resources/TenantResource/Pages/EditTenant.php
+
+		-
+			message: '#^Class Src\\Support\\Infrastructure\\Persistence\\TenantScope implements generic interface Illuminate\\Database\\Eloquent\\Scope but does not specify its types\: TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Support/Infrastructure/Persistence/TenantScope.php
+
+		-
+			message: '#^Parameter \#1 \$builder \(Illuminate\\Database\\Eloquent\\Builder\<Illuminate\\Database\\Eloquent\\Model\>\) of method Src\\Support\\Infrastructure\\Persistence\\TenantScope\:\:apply\(\) should be compatible with parameter \$builder \(Illuminate\\Database\\Eloquent\\Builder\<covariant Illuminate\\Database\\Eloquent\\Model\>\) of method Illuminate\\Database\\Eloquent\\Scope\<Illuminate\\Database\\Eloquent\\Model\>\:\:apply\(\)$#'
+			identifier: method.childParameterType
+			count: 1
+			path: src/Support/Infrastructure/Persistence/TenantScope.php
+
+		-
+			message: '#^Access to an undefined property Src\\Contexts\\Identity\\Domain\\Models\\User\:\:\$locale\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Support/Presentation/Http/Middleware/SetLocale.php
