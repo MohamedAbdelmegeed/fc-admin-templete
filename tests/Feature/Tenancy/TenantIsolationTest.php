@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
+use Src\Contexts\Audit\Domain\Models\Activity;
 use Src\Contexts\Identity\Domain\Models\Role;
 use Src\Contexts\Identity\Domain\Models\User;
 use Src\Contexts\Notifications\Domain\Models\NotificationPreference;
@@ -94,8 +95,12 @@ it('كل موديل فيه tenant_id عليه BelongsToTenant', function (): voi
     // بيستخدمه كعمود «فريق»، والأدوار عندنا **عامة** (tenant_id = null)
     // والربط بالمؤسسة بيحصل في model_has_roles. لو حطينا الـ trait عليه
     // هيبقى مستحيل نقرا الأدوار وإحنا بره سياق مؤسسة. (docs/02 بند ١)
+    // والاستثناء التاني: Activity. الـ trait بيرمي على الكتابة لما مفيش
+    // سياق، والنشاط بيتسجّل من الكونسول والسيدرز والطوابير. الموديل
+    // بيركّب TenantScope يدوي فالقراءة متعزولة زي أي موديل تاني.
     $allowed = [
         Role::class,
+        Activity::class,
     ];
 
     $violations = [];

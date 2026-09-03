@@ -311,3 +311,73 @@
 .dark .fc-settings-tabs__item--active {
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.35);
 }
+
+/* ═══════════ قائمة التجهيز في لوحة التحكم ═══════════ */
+.fc-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.fc-checklist__item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-block: 0.5rem;
+}
+
+.fc-checklist__item + .fc-checklist__item {
+  border-block-start: 1px solid var(--fc-border-subtle);
+}
+
+.fc-checklist__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 1.375rem;
+  height: 1.375rem;
+  border-radius: 9999px;
+  border: 1px solid var(--fc-border);
+  color: var(--fc-text-muted);
+  background: var(--fc-sunken);
+}
+
+.fc-checklist__mark--done {
+  background: color-mix(in oklab, var(--fc-success) 15%, transparent);
+  border-color: color-mix(in oklab, var(--fc-success) 35%, transparent);
+  color: var(--fc-success);
+}
+
+.fc-checklist__icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.fc-checklist__label {
+  font-size: var(--text-body);
+  color: var(--fc-text);
+}
+
+.fc-checklist__label--done {
+  color: var(--fc-text-muted);
+  text-decoration: line-through;
+}
+
+/* الزرار في الآخر دايماً — margin-inline-start:auto بينعكس لوحده في RTL */
+.fc-checklist__action {
+  margin-inline-start: auto;
+  flex: none;
+  padding-inline: 0.625rem;
+  padding-block: 0.25rem;
+  border-radius: var(--radius-fc-sm);
+  font-size: var(--text-small);
+  font-weight: 500;
+  color: var(--fc-brand-600, var(--fc-info));
+  background: color-mix(in oklab, var(--fc-brand-600, var(--fc-info)) 10%, transparent);
+  text-decoration: none;
+}
+
+.fc-checklist__action:hover {
+  background: color-mix(in oklab, var(--fc-brand-600, var(--fc-info)) 18%, transparent);
+}
