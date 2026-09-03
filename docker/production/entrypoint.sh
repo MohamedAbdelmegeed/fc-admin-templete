@@ -6,6 +6,15 @@ set -euo pipefail
 # لو عملناها في الـ Dockerfile هتتخزّن قيم فاضية والتطبيق هيدوّر على
 # قاعدة بيانات مش موجودة.
 
+# المجلدات دي فاضية في git، وأي استثناء في .dockerignore ممكن يوقّعها.
+# غيابها بيدّي «Please provide a valid cache path» وقت view:cache.
+mkdir -p \
+    storage/framework/cache/data \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/logs \
+    bootstrap/cache
+
 php artisan config:clear --quiet || true
 
 echo "[fc] waiting for the database…"

@@ -1,0 +1,53 @@
+# ⚠️ الملف ده مهم أمنياً مش بس للسرعة.
+#
+# مرحلة vendor بتعمل `COPY . .` — من غير الاستثناءات دي، أي بناء من
+# نسخة عمل محلية بيحطّ .env بتاعك (فيه APP_KEY وكلمات مرور القاعدة
+# وS3) جوه الصورة. الصورة بتتخزّن في ريجستري وبتتنسخ على السيرفرات،
+# فالسر بيبقى منشور فعلياً.
+
+.env
+.env.*
+!.env.example
+
+# بتتبني جوه الصورة — نسخها من الهوست بيبطّئ البناء وممكن يحطّ
+# مكتبات متبنية لمنصة تانية (ويندوز/ماك) جوه صورة لينكس.
+/vendor
+/node_modules
+/public/build
+/public/hot
+/public/storage
+
+.git
+.gitignore
+.gitattributes
+.github
+
+# ملفات المطوّر — مالهاش لازمة في الإنتاج
+/.idea
+/.vscode
+/.zed
+/.nova
+/.cursor
+/.codex
+.phpactor.json
+_ide_helper.php
+.phpunit.result.cache
+/.phpunit.cache
+
+# بيئة التطوير المحلية — الشهادات دي مفاتيح خاصة
+/docker/nginx/certs
+docker-compose.yml
+docker-compose.*.yml
+
+/tests
+phpunit.xml
+phpstan.neon
+phpstan-baseline.neon
+pint.json
+
+# ⚠️ مش بنستثني storage/framework/* — المجلدات دي فاضية إلا من
+# .gitignore، ولو استثنيناها الدليل نفسه مابيتعملش جوه الصورة
+# و`view:cache` بيقع بـ «Please provide a valid cache path».
+# الـ entrypoint بيعمل mkdir -p عليها برضه كحزام أمان.
+/storage/logs/*.log
+*.log

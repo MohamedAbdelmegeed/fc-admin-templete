@@ -26,8 +26,32 @@ COPY src ./src
 
 RUN npm run build
 
-# ─────────────── ٢. اعتماديات PHP ───────────────
-FROM composer:2.8 AS vendor
+# ─────────────── ٢. الأساس: PHP + الإضافات ───────────────
+#
+# ⚠️ الطبقة دي مشتركة بين مرحلة الاعتماديات ومرحلة التشغيل عن قصد.
+# أول محاولة كانت بتستخدم صورة composer الرسمية لتنزيل الاعتماديات،
+# وهي مفيهاش intl ولا pcntl ولا exif — فـ composer install بيرفض:
+#   «filament/support requires ext-intl -> it is missing from your system»
+# الحل مش --ignore-platform-req (ده بيحلّ الاعتماديات على منصة مش
+# اللي هتشتغل عليها فعلاً)، الحل إن composer يشتغل على نفس المنصة.
+FROM php:8.4-fpm-bookworm AS base
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libpq-dev libicu-dev libzip-dev libpng-dev libjpeg62-turbo-dev \
+        libfreetype6-dev libwebp-dev libonig-dev \
+        git unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install -j"$(nproc)" \
+        pdo_pgsql pgsql gd intl zip bcmath exif pcntl opcache sockets
+
+RUN pecl install redis && docker-php-ext-enable redis
+
+# ─────────────── ٣. اعتماديات PHP ───────────────
+FROM base AS vendor
+
+COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
@@ -46,20 +70,12 @@ COPY . .
 
 RUN composer dump-autoload --no-dev --optimize --classmap-authoritative
 
-# ─────────────── ٣. التشغيل ───────────────
-FROM php:8.4-fpm-bookworm AS runtime
+# ─────────────── ٤. التشغيل ───────────────
+FROM base AS runtime
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         nginx supervisor \
-        libpq-dev libicu-dev libzip-dev libpng-dev libjpeg62-turbo-dev \
-        libfreetype6-dev libwebp-dev libonig-dev \
     && rm -rf /var/lib/apt/lists/*
-
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
-    && docker-php-ext-install -j"$(nproc)" \
-        pdo_pgsql pgsql gd intl zip bcmath exif pcntl opcache sockets
-
-RUN pecl install redis && docker-php-ext-enable redis
 
 WORKDIR /var/www/html
 
