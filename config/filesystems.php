@@ -49,6 +49,7 @@ return [
             'report' => false,
         ],
 
+        // الملفات العامة (لوجوهات، صور الملف الشخصي)
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -59,6 +60,33 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
+            'report' => false,
+        ],
+
+        /*
+         * الملفات الخاصة (عقود، مستندات، هويات) — روابط مؤقتة بس.
+         *
+         * ⚠️ الديسك ده كانت الإعدادات بتشاور عليه من غير ما يكون معرّف
+         * أصلاً (storage.private_disk = 's3-private')، فأي رفع لمجموعة
+         * خاصة كان بيقع بـ «Disk [s3-private] does not have a config».
+         * (docs/04 بند ٢)
+         *
+         * مفيش 'url' عن قصد: وجوده بيخلي Storage::url() يرجّع رابط دائم
+         * لملف المفروض إنه سري. غيابه بيجبر الكود على getTemporaryUrl().
+         *
+         * و'throw' => true مش false زي الديسكات العامة: فشل صامت في رفع
+         * عقد أسوأ بكتير من استثناء ظاهر.
+         */
+        's3-private' => [
+            'driver' => 's3',
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION'),
+            'bucket' => env('AWS_PRIVATE_BUCKET', env('AWS_BUCKET')),
+            'endpoint' => env('AWS_ENDPOINT'),
+            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+            'visibility' => 'private',
+            'throw' => true,
             'report' => false,
         ],
 

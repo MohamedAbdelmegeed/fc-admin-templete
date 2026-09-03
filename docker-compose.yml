@@ -65,7 +65,12 @@ services:
     volumes: ["miniodata:/data"]
     ports: ["9000:9000", "9001:9001"]
 
-  # ينشئ الباكت مرة واحدة وقت الإقلاع — من غيره الرفع بيفشل بـ NoSuchBucket
+  # ينشئ الباكتات مرة واحدة وقت الإقلاع — من غيرها الرفع بيفشل بـ NoSuchBucket
+  #
+  # ⚠️ باكتين مش واحد. الباكت العام عليه anonymous download، فلو الملفات
+  # الخاصة (عقود، مستندات) اتحطّت فيه بتبقى مقروءة للكل بلينك مباشر.
+  # الباكت الخاص عمداً من غير أي سياسة anonymous — الوصول بروابط
+  # مؤقتة موقّعة بس. (docs/04 بند ٢)
   minio-init:
     image: minio/mc
     depends_on: [minio]
@@ -74,6 +79,8 @@ services:
       until mc alias set local http://minio:9000 minio minio12345; do sleep 1; done;
       mc mb --ignore-existing local/fc-admin;
       mc anonymous set download local/fc-admin;
+      mc mb --ignore-existing local/fc-admin-private;
+      mc anonymous set none local/fc-admin-private;
       "
 
   horizon:
