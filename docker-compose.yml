@@ -11,6 +11,10 @@ services:
       # التفاصيل في docs/CHANGELOG-DOCS.md. الكود المصدري لسه على الـ bind mount عادي.
       - vendor:/var/www/html/vendor
       - node_modules:/var/www/html/node_modules
+    # منفذ خادم Vite للتطوير (npm run dev) — من غيره HMR شغّال جوه
+    # الحاوية بس والمتصفح على ويندوز مايقدرش يوصله. مش لازم في
+    # الإنتاج، فمش موجود في docker/production.
+    ports: ["5173:5173"]
     depends_on: [postgres, redis]
     environment:
       PHP_IDE_CONFIG: "serverName=fc-admin"

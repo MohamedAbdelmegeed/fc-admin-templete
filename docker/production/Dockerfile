@@ -9,24 +9,7 @@
 # ⚠️ الصورة دي مالهاش علاقة بـ docker/php/Dockerfile — دي للتطوير
 # (بتعتمد على bind mount ومفيهاش أصول مبنية ولا opcache مشدود).
 
-# ─────────────── ١. بناء الأصول ───────────────
-FROM node:22-bookworm-slim AS assets
-
-WORKDIR /app
-
-COPY package.json package-lock.json ./
-RUN npm ci --ignore-scripts
-
-# الثيم بيمسح ملفات PHP و Blade عشان Tailwind يلاقي الفئات
-# (@source في theme.css)، فلازم تكون موجودة قبل البناء.
-COPY resources ./resources
-COPY vite.config.js ./
-COPY app ./app
-COPY src ./src
-
-RUN npm run build
-
-# ─────────────── ٢. الأساس: PHP + الإضافات ───────────────
+# ─────────────── ١. الأساس: PHP + الإضافات ───────────────
 #
 # ⚠️ الطبقة دي مشتركة بين مرحلة الاعتماديات ومرحلة التشغيل عن قصد.
 # أول محاولة كانت بتستخدم صورة composer الرسمية لتنزيل الاعتماديات،
@@ -48,7 +31,7 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
 
 RUN pecl install redis && docker-php-ext-enable redis
 
-# ─────────────── ٣. اعتماديات PHP ───────────────
+# ─────────────── ٢. اعتماديات PHP ───────────────
 FROM base AS vendor
 
 COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
@@ -69,6 +52,36 @@ RUN composer install \
 COPY . .
 
 RUN composer dump-autoload --no-dev --optimize --classmap-authoritative
+
+# ─────────────── ٣. بناء الأصول ───────────────
+#
+# ⚠️ لازم تيجي بعد مرحلة vendor مش قبلها: resources/css/filament/admin/
+# theme.css بيعمل @import على vendor/filament/filament/resources/css/
+# theme.css — ده ملف PHP package مش JS، فمفيش طريقة تانية يوصله غير
+# إن vendor/ يكون موجود وقت ما Vite يشتغل. (تحليل حقيقي من فشل بناء
+# سابق: «Can't resolve '../../../../vendor/filament/filament/
+# resources/css/theme.css'» لما الأصول اتبنت في مرحلة منفصلة قبل ما
+# vendor يتنسخ.)
+FROM node:22-bookworm-slim AS assets
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci --ignore-scripts
+
+# الثيم بيمسح ملفات PHP و Blade عشان Tailwind يلاقي الفئات
+# (@source في theme.css)، فلازم تكون موجودة قبل البناء.
+COPY resources ./resources
+COPY vite.config.js ./
+COPY app ./app
+COPY src ./src
+
+# vendor/filament بس — مش vendor/ كله. الحزمة دي فيها آلاف الملفات
+# لباكدجات مالهاش أي علاقة بالـ CSS، ونسخها كلها بيبطّئ البناء لغير
+# داعي.
+COPY --from=vendor /app/vendor/filament ./vendor/filament
+
+RUN npm run build
 
 # ─────────────── ٤. التشغيل ───────────────
 FROM base AS runtime
