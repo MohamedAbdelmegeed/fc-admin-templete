@@ -179,7 +179,7 @@ final class AdminPanelProvider extends PanelProvider
     {
         return collect(NavigationGroup::cases())
             ->filter(fn (NavigationGroup $group): bool => $group->ability() === null
-                || Gate::allows($group->ability()))
+                || $this->canAccessNavigationGroup($group))
             ->sortBy(fn (NavigationGroup $group): int => $group->sort())
             ->map(fn (NavigationGroup $group): FilamentNavigationGroup => FilamentNavigationGroup::make()
                 ->label($group->getLabel())
@@ -187,6 +187,21 @@ final class AdminPanelProvider extends PanelProvider
                 ->collapsible())
             ->values()
             ->all();
+    }
+
+    /**
+     * Gate::allows() بينفّذ وقت تسجيل اللوحة — يعني في أي أمر artisan
+     * مش بس طلبات HTTP، بما فيها composer dump-autoload وقت بناء
+     * الصورة، لما الـ APP_KEY لسه مش موجود عمداً (docker/production
+     * مالوش .env). من غير الـ try/catch ده، الاستثناء بيوقف البناء كله.
+     */
+    private function canAccessNavigationGroup(NavigationGroup $group): bool
+    {
+        try {
+            return Gate::allows($group->ability());
+        } catch (Throwable) {
+            return false;
+        }
     }
 
     /**
